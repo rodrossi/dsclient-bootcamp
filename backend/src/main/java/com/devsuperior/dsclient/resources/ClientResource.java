@@ -1,21 +1,26 @@
 package com.devsuperior.dsclient.resources;
 
-import java.time.Instant;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devsuperior.dsclient.entities.Client;
+import com.devsuperior.dsclient.services.ClientService;
 
 @RestController
 @RequestMapping(value = "/customers")
 public class ClientResource {
 
+	@Autowired
+	private ClientService service;
+	
 	@GetMapping
-	public ResponseEntity<Client> findAll() {
-		Client client = new Client(1L, "Rossi","318.129.898.06" , 2.000, Instant.now(), 3);
-		return ResponseEntity.ok().body(client);
+	public ResponseEntity<List<Client>> findAll() {
+		List<Client> list = service.findAll();
+		return ResponseEntity.ok().body(list);
 	}
 }
